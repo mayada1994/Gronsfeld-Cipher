@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="18dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/key_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="@string/key">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fKey"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/default_key"
+            android:inputType="number"
+            android:textSize="14sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/key_wrapper"
+        android:hint="@string/text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="14sp"
+            android:text="@string/default_text"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtEncodedHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/encoded_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtEncoded"
+        app:layout_constraintTop_toBottomOf="@id/text_wrapper" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtEncoded"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bordered_background"
+        android:scrollbars="vertical"
+        android:padding="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtDecodedHeader"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtEncodedHeader" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtDecodedHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/decoded_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtDecoded"
+        app:layout_constraintTop_toBottomOf="@id/txtEncoded" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtDecoded"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:padding="4dp"
+        android:background="@drawable/bordered_background"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnEncode"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtDecodedHeader" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEncode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/encode"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/btnDecode"
+        app:layout_constraintTop_toBottomOf="@id/txtDecoded" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDecode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/decode"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@id/btnEncode"
+        app:layout_constraintEnd_toStartOf="@id/btnEncode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnEncode"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Gronsfeld Cipher</string>
+    <string name="latin">ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
+    <string name="cyrillic">АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя</string>
+    <string name="default_text">Криптографическая стойкость – способность криптографического алгоритма противостоять криптоанализу.</string>
+    <string name="default_key">3827594185493761</string>
+    <string-array name="alphabets">
+        <item>Змішаний алфавіт</item>
+        <item>Кирилиця</item>
+        <item>Латиниця</item>
+    </string-array>
+    <string name="encode">Зашифрувати</string>
+    <string name="decode">Розшифрувати</string>
+    <string name="encoded_text">Зашифрований текст</string>
+    <string name="decoded_text">Розшифрований текст</string>
+    <string name="key">Ключ</string>
+    <string name="text">Текст</string>
+</resources>
