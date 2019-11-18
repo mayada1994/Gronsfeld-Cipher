@@ -1,9 +1,9 @@
 package com.gronsfeldcipher.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         latin = this.resources.getString(R.string.latin).toCharArray()
         cyrillic = this.resources.getString(R.string.cyrillic).toCharArray()
         mixed = latin + cyrillic
+        mixed = mixed.toList().shuffled().toCharArray()
+
         key = this.resources.getString(R.string.default_key).toCharArray()
 
         txtEncoded.movementMethod = ScrollingMovementMethod()
