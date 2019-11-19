@@ -15,4 +15,11 @@
     <string name="decoded_text">Розшифрований текст</string>
     <string name="key">Ключ</string>
     <string name="text">Текст</string>
+    <string name="invalid_pass">Хибний пароль</string>
+    <string name="invalid_pass_alert">Ви ввели хибний пароль! Залишилось %d спроби</string>
+    <string name="ok">OK</string>
+    <string name="password">Пароль</string>
+    <string name="check">Перевірити</string>
+    <string name="enter_pass">Введіть, будь ласка, пароль</string>
+    <string name="blocked">Ви перевищили допустиму кількість разів введення пароля</string>
 </resources>
