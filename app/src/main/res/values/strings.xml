@@ -21,5 +21,7 @@
     <string name="password">Пароль</string>
     <string name="check">Перевірити</string>
     <string name="enter_pass">Введіть, будь ласка, пароль</string>
-    <string name="blocked">Ви перевищили допустиму кількість разів введення пароля</string>
+    <string name="blocked">Ви перевищили допустиму кількість разів введення паролю</string>
+    <string name="trial_header">Перевищення ліміту введення паролю</string>
+    <string name="trial">Ви перевищили допустиму кількість разів введення паролю. Вам надається можливість пробного використання додатку протягом наступних 10 хвилин</string>
 </resources>

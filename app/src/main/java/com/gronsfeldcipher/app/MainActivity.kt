@@ -1,13 +1,19 @@
 package com.gronsfeldcipher.app
 
+import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Settings
 import android.text.method.ScrollingMovementMethod
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_enter_password.view.*
 import kotlinx.android.synthetic.main.dialog_incorrect_password.view.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,11 +23,27 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mixed: CharArray
     private lateinit var key: CharArray
 
-    private var maxPassEntry = 7
+    private lateinit var sharedPreferences: SharedPreferences
+
+    private var maxPassEntry = MAXIMUM_ENTRY
+
+    @get:SuppressLint("HardwareIds")
+    val uDID: String
+        get() = Settings.Secure.getString(
+            this.contentResolver,
+            Settings.Secure.ANDROID_ID
+        )
+
+    @get:Synchronized
+    @set:Synchronized
+    var cachedDeviceId: String?
+        get() = sharedPreferences.getString(DEVICE_ID, null)
+        set(deviceId) = sharedPreferences.edit().putString(DEVICE_ID, deviceId).apply()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         latin = this.resources.getString(R.string.latin).toCharArray()
         cyrillic = this.resources.getString(R.string.cyrillic).toCharArray()
         mixed = latin + cyrillic
@@ -130,6 +152,7 @@ class MainActivity : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_enter_password, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.setCancelable(false)
         with(dialogView) {
             btnCheck.setOnClickListener {
                 if (fPassword.text.isNullOrBlank()) {
@@ -140,7 +163,11 @@ class MainActivity : AppCompatActivity() {
                     if (maxPassEntry > 0) {
                         showInvalidPasswordAlert()
                     } else {
-                        showBlockedAlert()
+                        if (cachedDeviceId.isNullOrBlank()) {
+                            showTrialAlert()
+                        } else {
+                            showBlockedAlert()
+                        }
                     }
                     alertDialog.dismiss()
                     return@setOnClickListener
@@ -155,6 +182,7 @@ class MainActivity : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_incorrect_password, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.setCancelable(false)
         with(dialogView) {
 
             invalid_password_desc_txv.text =
@@ -169,16 +197,45 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
+    private fun runTrial() {
+        cachedDeviceId = uDID
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                runOnUiThread {
+                    maxPassEntry = MAXIMUM_ENTRY
+                    showPasswordDialog()
+                }
+            }
+        }, 1000 * 60 * 10)
+    }
+
+    private fun showTrialAlert() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_trial_period, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.setCancelable(false)
+        dialogView.findViewById<AppCompatTextView>(R.id.btnAccept).setOnClickListener {
+            alertDialog.cancel()
+            runTrial()
+        }
+        alertDialog.show()
+    }
 
     private fun showBlockedAlert() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_blocked, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.setCancelable(false)
         alertDialog.show()
     }
 
     private fun isValidPassword(password: String): Boolean {
         return password.length in 10..12
+    }
+
+    companion object {
+        private const val DEVICE_ID = "device_id"
+        private const val MAXIMUM_ENTRY = 7
     }
 
 }
